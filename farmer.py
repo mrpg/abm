@@ -1,3 +1,5 @@
+import math
+
 class Farmer:
     def __init__(self, river, position, alpha):
         self.river = river
@@ -8,7 +10,7 @@ class Farmer:
         return 0
 
     def profit(self, water):
-        return water
+        return math.sqrt(water)
 
     def extraction(self, action_space):
         x_opt = 0
