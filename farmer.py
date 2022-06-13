@@ -6,6 +6,9 @@ class Farmer:
         self.position = position
         self.alpha = alpha
 
+    def action_space(self, ll, ul):
+        return range(ll, ul + 1)
+
     def other_regarding(self):
         return 0
 
@@ -13,8 +16,8 @@ class Farmer:
         return math.sqrt(water)
 
     def extraction(self, action_space):
-        x_opt = 0
-        y_opt = -1e9
+        x_opt = None
+        y_opt = float('-inf')
 
         for action in action_space:
             if self.profit(action) > y_opt:
