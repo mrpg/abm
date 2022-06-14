@@ -1,30 +1,40 @@
+from learning import *
+from production import *
+
+import itertools
 import math
 
 class Farmer:
-    def __init__(self, river, position, alpha):
+    def __init__(self, river, position):
         self.river = river
         self.position = position
-        self.alpha = alpha
+        self.investment = 0
+        self.endowment = 0
+
+        self.strategies = self.available_strategies()
+        self.learning = Learning(len(self.strategies))
+
+    def possible_investments(self):
+        return range(4)
+
+    def available_strategies(self):
+        return list(itertools.product(self.possible_investments(),
+                    [Production(0, 2, 2, 1),
+                     Production(0, 1, 1, 1),
+                     Production(2, 1, 1, 3),
+                     Production(2, 1, 0, 4),
+                     Production(3, 2, 0, 6)]))
 
     def action_space(self, ll, ul):
         return range(ll, ul + 1)
 
-    def other_regarding(self):
-        return 0
-
     def profit(self, water):
         return math.sqrt(water)
 
-    def extraction(self, action_space):
-        x_opt = None
-        y_opt = float('-inf')
+    def choice(self):
+        chosen = self.strategies[self.learning.choose()]
 
-        for action in action_space:
-            if self.profit(action) > y_opt:
-                y_opt = self.utility(action)
-                x_opt = action
+        self.endowment -= chosen[0]
+        self.endowment -= chosen[1].input_money
 
-        return x_opt
-
-    def utility(self, water):
-        return self.alpha*self.profit(water) + (1-self.alpha)*self.other_regarding()
+        return chosen

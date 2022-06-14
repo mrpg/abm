@@ -1,64 +1,55 @@
 from farmer import *
 
 class River:
-    def __init__(self, rate):
-        self.rate = rate
+    def __init__(self, initial):
+        self.amount = initial
         self.farmers = []
-        self.history = []
 
     def add_farmer(self, alpha):
         next_pos = len(self.farmers)
-        new_farmer = Farmer(self, next_pos, alpha)
+        new_farmer = Farmer(self, next_pos)
 
         self.farmers.append(new_farmer)
 
     def get_farmers(self):
         return self.farmers
 
-    def welfare(self, extractions):
-        profits = sum(f.profit(e) for f, e in zip(self.farmers, extractions))
-        outflow = self.rate - sum(extractions)
+    def groundwater(self):
+        total_investment = sum(f.investment for f in self.farmers)
+
+        return max(0, min(12, 2*total_investment - 4))
+
+    def welfare(self):
+        profits = sum(f.endowment for f in self.farmers)
+        outflow = self.amount
 
         return [profits, outflow]
 
-    def social_planner(self, welfare_index = 0):
-        # hack: naive, inefficient and extremely limited
-        # needs more RECURSION
-        
-        if len(self.farmers) != 4:
-            raise ValueError('This function is currently only able to optimize for 4 agents')
-            
-        opt_x = None
-        opt_y = float('-inf')
-        ul = self.rate
-        
-        for i in self.farmers[0].action_space(0, ul):
-            for j in self.farmers[1].action_space(0, ul-i):
-                for k in self.farmers[2].action_space(0, ul-i-j):
-                    for l in self.farmers[3].action_space(0, ul-i-j-k):
-                        if (cur_y := self.welfare([i, j, k, l])[welfare_index]) > opt_y:
-                            opt_x = [i, j, k, l]
-                            opt_y = cur_y
-
-        return opt_x
+    def choice_feasible(self, choice):
+        return self.amount >= choice.input_water
 
     def another_run(self):
-        amount = self.rate
-        extractions = []
+        choices = [farmer.choice() for farmer in self.farmers]
 
-        for farmer in self.farmers:
-            this_one = farmer.extraction(range(0, amount + 1))
-            extractions.append(this_one)
-            amount -= this_one
+        for farmer, choice in zip(self.farmers, choices):
+            farmer.investment = choice[0]
 
-        self.history.append([extractions, self.farmers])
+        self.amount += self.groundwater()
+        
+        for farmer, choice in zip(self.farmers, choices):
+            if self.choice_feasible(choice[1]):
+                self.amount -= choice[1].input_water
+                self.amount += choice[1].output_water
+                farmer.endowment += choice[1].output_money
 
-        return extractions
+        # TODO: reset
+
+        return {'choices': choices, 'welfare': self.welfare()} # TODO: to be defined, add individual profits
 
     def many_runs(self, n = 1000):
-        all_extractions = []
+        all_runs = []
         
         for _ in range(n):
-            all_extractions.append(self.another_run())
+            all_runs.append(self.another_run())
 
-        return all_extractions
+        return all_runs
