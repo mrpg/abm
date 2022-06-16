@@ -6,6 +6,7 @@ class Learning:
     # random "learning", also general-purpose super-class
     def __init__(self, **kwargs):
         self.parameters = kwargs
+        self.history = []
 
     def __getitem__(self, name):
         return self.parameters[name]
@@ -18,6 +19,9 @@ class Learning:
 
     def update(self, action, reward):
         pass
+
+    def archive(self, **kwargs):
+        self.history.append(kwargs)
 
 class ReinforcementSimple(Learning):
     def __init__(self, alpha, lambda_, n, seed = None, values = None):
