@@ -29,7 +29,7 @@ class ReinforcementSimple(Learning):
         self.rng = np.random.default_rng(seed)
 
         if values is None:
-            self.values = np.ones(n)
+            self.values = np.ones(n) * 10 # TODO
         else:
             self.values = values
 
@@ -43,4 +43,6 @@ class ReinforcementSimple(Learning):
         return self.rng.choice(self['n'], p = self.probabilities())
 
     def update(self, action, reward):
+        # print(f'{action} -> {reward}, value: {self.values[action]}', end = '')
         self.values[action] = (1-self['alpha'])*self.values[action] + self['alpha']*reward
+        # print(f' -> {self.values[action]}')

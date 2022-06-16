@@ -5,9 +5,12 @@ sys.path.append(os.path.dirname(os.path.realpath(__file__))) # hack (https://sta
 
 from farmer import *
 from river import *
+from plots import *
 
 if __name__ == '__main__':
     r = River(1)
 
     for _ in range(4):
-        r.add_farmer(1)
+        r.add_farmer()
+
+    runs = r.many_runs()

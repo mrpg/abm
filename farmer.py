@@ -5,7 +5,7 @@ import itertools
 import math
 
 class Farmer:
-    def __init__(self, river, position, learn_params = (0.1, 1, None)):   
+    def __init__(self, river, position, learn_params = (0.5, 1, None)):   
         self.river = river
         self.position = position
         self.investment = 0
@@ -39,7 +39,7 @@ class Farmer:
     def choice(self):
         chosen = self.strategies[self.learn.choose()]
 
-        self.endowment -= chosen[0]
+        self.endowment -= chosen[0] # investment cannot be recovered
         self.endowment -= chosen[1].input_money
 
         return chosen

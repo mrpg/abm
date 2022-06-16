@@ -6,7 +6,7 @@ class River:
         self.initial = initial
         self.farmers = []
 
-    def add_farmer(self, alpha):
+    def add_farmer(self):
         next_pos = len(self.farmers)
         new_farmer = Farmer(self, next_pos)
 
@@ -36,6 +36,8 @@ class River:
         self.amount = self.initial
 
     def another_run(self):
+        self.reset()
+        
         choices = [farmer.choice() for farmer in self.farmers]
 
         for farmer, choice in zip(self.farmers, choices):
@@ -49,15 +51,18 @@ class River:
                 self.amount += choice[1].output_water
                 farmer.endowment += choice[1].output_money
 
-            farmer.learn.archive(endowment = farmer.endowment)
-            farmer.learn.archive(choice = choice)
-
             outcomes = {'choices': choices, 'welfare': self.welfare()} # TODO: to be defined, add individual profits
 
         # after everything has happened, learn:
         for farmer, choice in zip(self.farmers, choices):
             farmer.learn.update(action = farmer.strategies.index(choice),
                                 reward = farmer.endowment)
+                                
+            farmer.learn.archive(endowment = farmer.endowment,
+                                 choice = choice,
+                                 choice_id = farmer.strategies.index(choice),
+                                 new_probs = farmer.learn.probabilities())
+
             
         return outcomes
 
@@ -66,8 +71,5 @@ class River:
         
         for _ in range(n):
             all_runs.append(self.another_run())
-
-            # clean up:
-            self.reset()
 
         return all_runs
