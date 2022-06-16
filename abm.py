@@ -13,4 +13,4 @@ if __name__ == '__main__':
     for _ in range(4):
         r.add_farmer()
 
-    runs = r.many_runs()
+    runs = r.many_runs(50000000)

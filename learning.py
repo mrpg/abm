@@ -29,7 +29,7 @@ class ReinforcementSimple(Learning):
         self.rng = np.random.default_rng(seed)
 
         if values is None:
-            self.values = np.ones(n) * 10 # TODO
+            self.values = np.zeros(n) # TODO
         else:
             self.values = values
 

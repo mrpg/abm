@@ -5,7 +5,7 @@ import itertools
 import math
 
 class Farmer:
-    def __init__(self, river, position, learn_params = (0.5, 1, None)):   
+    def __init__(self, river, position, learn_params = (0.1, 3, None)):   
         self.river = river
         self.position = position
         self.investment = 0
