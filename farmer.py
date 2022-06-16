@@ -12,7 +12,7 @@ class Farmer:
         self.endowment = 0
 
         self.strategies = self.available_strategies()
-        self.learning = Learning(len(self.strategies))
+        self.learning = Learning(n = len(self.strategies))
 
     def possible_investments(self):
         return range(4)

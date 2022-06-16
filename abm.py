@@ -7,8 +7,6 @@ from farmer import *
 from river import *
 
 if __name__ == '__main__':
-    random.seed(5295513452)
-    
     r = River(1)
 
     for _ in range(4):
