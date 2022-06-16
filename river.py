@@ -3,6 +3,7 @@ from farmer import *
 class River:
     def __init__(self, initial):
         self.amount = initial
+        self.initial = initial
         self.farmers = []
 
     def add_farmer(self, alpha):
@@ -28,6 +29,9 @@ class River:
     def choice_feasible(self, choice):
         return self.amount >= choice.input_water
 
+    def reset(self):
+        self.amount = self.initial
+
     def another_run(self):
         choices = [farmer.choice() for farmer in self.farmers]
 
@@ -42,14 +46,28 @@ class River:
                 self.amount += choice[1].output_water
                 farmer.endowment += choice[1].output_money
 
-        # TODO: reset
+            farmer.learn.archive(endowment = farmer.endowment)
+            farmer.learn.archive(choice = choice)
 
-        return {'choices': choices, 'welfare': self.welfare()} # TODO: to be defined, add individual profits
+            outcomes = {'choices': choices, 'welfare': self.welfare()} # TODO: to be defined, add individual profits
 
-    def many_runs(self, n = 1000):
+        # after everything has happened, learn:
+        for farmer, choice in zip(self.farmers, choices):
+            farmer.learn.update(action = farmer.strategies.index(choice),
+                                reward = farmer.endowment)
+            
+        return outcomes
+
+    def many_runs(self, n = 10000):
         all_runs = []
         
         for _ in range(n):
             all_runs.append(self.another_run())
+
+            # clean up:
+            for farmer in self.farmers:
+                farmer.reset()
+            
+        self.reset()
 
         return all_runs

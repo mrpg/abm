@@ -5,14 +5,19 @@ import itertools
 import math
 
 class Farmer:
-    def __init__(self, river, position):
+    def __init__(self, river, position, learn_params = (0.1, 1, None)):   
         self.river = river
         self.position = position
         self.investment = 0
         self.endowment = 0
 
+        self.initial = (river, position, self.investment, self.endowment)
+
         self.strategies = self.available_strategies()
-        self.learning = Learning(n = len(self.strategies))
+        self.learn = ReinforcementSimple(alpha = learn_params[0],
+                                         lambda_ = learn_params[1],
+                                         n = len(self.strategies),
+                                         seed = learn_params[2])
 
     def possible_investments(self):
         return range(4)
@@ -25,14 +30,14 @@ class Farmer:
                      Production(2, 1, 0, 4),
                      Production(3, 2, 0, 6)]))
 
-    def action_space(self, ll, ul):
-        return range(ll, ul + 1)
-
-    def profit(self, water):
-        return math.sqrt(water)
-
+    def reset(self):
+        self.river = self.initial[0]
+        self.position = self.initial[1]
+        self.investment = self.initial[2]
+        self.endowment = self.initial[3]
+    
     def choice(self):
-        chosen = self.strategies[self.learning.choose()]
+        chosen = self.strategies[self.learn.choose()]
 
         self.endowment -= chosen[0]
         self.endowment -= chosen[1].input_money
