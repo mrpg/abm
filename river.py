@@ -30,6 +30,9 @@ class River:
         return self.amount >= choice.input_water
 
     def reset(self):
+        for farmer in self.farmers:
+            farmer.reset()
+
         self.amount = self.initial
 
     def another_run(self):
@@ -65,9 +68,6 @@ class River:
             all_runs.append(self.another_run())
 
             # clean up:
-            for farmer in self.farmers:
-                farmer.reset()
-            
-        self.reset()
+            self.reset()
 
         return all_runs
