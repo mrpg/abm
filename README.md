@@ -17,3 +17,5 @@ To see usage,
 ```sh
 python3 abm.py --help
 ```
+
+There are also very simple tests in `simple/`.

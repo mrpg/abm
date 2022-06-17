@@ -22,11 +22,11 @@ class Farmer:
 
     def available_strategies(self):
         return list(itertools.product(self.possible_investments(),
-                    [Production(0, 2, 2, 1),
-                     Production(0, 1, 1, 1),
-                     Production(2, 1, 1, 3),
-                     Production(2, 1, 0, 4),
-                     Production(3, 2, 0, 6)]))
+                    [Production('A1', 0, 2, 2, 1),
+                     Production('A2', 0, 1, 1, 1),
+                     Production('A3', 2, 1, 1, 3),
+                     Production('A4', 2, 1, 0, 4),
+                     Production('A5', 3, 2, 0, 6)]))
 
     def reset(self):
         self.river = self.initial[0]
