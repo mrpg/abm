@@ -5,13 +5,12 @@ import itertools
 import math
 
 class Farmer:
-    def __init__(self, river, position, learn_model, learn_args = None):   
+    def __init__(self, river, learn_model = 'Learning', learn_args = None):   
         self.river = river
-        self.position = position
         self.investment = 0
         self.endowment = 0
 
-        self.initial = (river, position, self.investment, self.endowment)
+        self.initial = (river, self.investment, self.endowment)
 
         learn_model_cls = globals()[learn_model]
         self.strategies = self.available_strategies()
@@ -30,9 +29,8 @@ class Farmer:
 
     def reset(self):
         self.river = self.initial[0]
-        self.position = self.initial[1]
-        self.investment = self.initial[2]
-        self.endowment = self.initial[3]
+        self.investment = self.initial[1]
+        self.endowment = self.initial[2]
     
     def choice(self):
         chosen = self.strategies[self.learn.choose()]

@@ -7,8 +7,7 @@ class River:
         self.farmers = []
 
     def add_farmer(self, **kwargs):
-        next_pos = len(self.farmers)
-        new_farmer = Farmer(self, next_pos, **kwargs)
+        new_farmer = Farmer(self, **kwargs)
 
         self.farmers.append(new_farmer)
 
