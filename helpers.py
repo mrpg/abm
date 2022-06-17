@@ -18,3 +18,9 @@ def profit_plot(river, which = 0):
 
 def mean(data):
     return sum(data)/len(data)
+
+def last_welfare(runs):
+    return runs[-1]['welfare']
+
+def last_probabilities(river, farmer):
+    return list(river.farmers[farmer].learn.history[-1]['new_probs'])
