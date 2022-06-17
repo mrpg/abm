@@ -34,8 +34,11 @@ class River:
 
         self.amount = self.initial
 
-    def another_run(self):
+    def another_run(self, stochastic_inflow = None):
         self.reset()
+
+        if stochastic_inflow is not None:
+            self.amount = stochastic_inflow()
         
         choices = [farmer.choice() for farmer in self.farmers]
 
@@ -65,10 +68,10 @@ class River:
             
         return outcomes
 
-    def many_runs(self, n = 10000):
+    def many_runs(self, n = 10000, stochastic_inflow = None):
         all_runs = []
         
         for _ in range(n):
-            all_runs.append(self.another_run())
+            all_runs.append(self.another_run(stochastic_inflow))
 
         return all_runs
