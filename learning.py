@@ -24,9 +24,13 @@ class Learning:
         self.history.append(kwargs)
 
 class ReinforcementSimple(Learning):
-    def __init__(self, alpha, lambda_, n, seed = None, values = None):
+    def __init__(self, alpha, lambda_, n, rng = None, values = None):
         super().__init__(alpha = alpha, lambda_ = lambda_, n = n)
-        self.rng = np.random.default_rng(seed)
+
+        if rng is None:
+            self.rng = np.random.default_rng()
+        else:
+            self.rng = rng
 
         if values is None:
             self.values = np.zeros(n) # TODO
