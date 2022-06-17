@@ -5,7 +5,7 @@ import itertools
 import math
 
 class Farmer:
-    def __init__(self, river, position, learn_params = (0.1, 3, None)):   
+    def __init__(self, river, position, learn_model, learn_args = None):   
         self.river = river
         self.position = position
         self.investment = 0
@@ -13,11 +13,9 @@ class Farmer:
 
         self.initial = (river, position, self.investment, self.endowment)
 
+        learn_model_cls = globals()[learn_model]
         self.strategies = self.available_strategies()
-        self.learn = ReinforcementSimple(alpha = learn_params[0],
-                                         lambda_ = learn_params[1],
-                                         n = len(self.strategies),
-                                         seed = learn_params[2])
+        self.learn = learn_model_cls(n = len(self.strategies), **learn_args)
 
     def possible_investments(self):
         return range(4)
