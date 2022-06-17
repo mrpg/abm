@@ -13,13 +13,15 @@ if __name__ == '__main__':
     parser.add_argument('alpha', type = float, help = 'alpha')
     parser.add_argument('lambda_', type = float, help = 'lambda')
     parser.add_argument('seed', nargs = '?', default = None, type = int, help = 'seed')
+    parser.add_argument('replications', nargs = '?', default = 10000, type = int, help = 'replications')
+    parser.add_argument('rounds', nargs = '?', default = 250, type = int, help = 'rounds per replication')
 
     args = parser.parse_args()
     rng = np.random.default_rng(args.seed)
 
-    print(f'welfare_pi,welfare_liter,'+','.join([f'p{k}i{i}A{j}' for k in range(0, 4) for i in range(0, 4) for j in range(1, 6)]))
+    print(f'initial,welfare_pi,welfare_liter,'+','.join([f'p{k}i{i}A{j}' for k in range(0, 4) for i in range(0, 4) for j in range(1, 6)]))
 
-    for replication in range(10000):
+    for replication in range(args.replications):
         r = River(1)
 
         for _ in range(4):
@@ -28,7 +30,7 @@ if __name__ == '__main__':
                                            lambda_ = args.lambda_,
                                            rng = rng))
 
-        runs = r.many_runs(250)
+        runs = r.many_runs(args.rounds)
 
-        CSV_prep = last_welfare(runs) + last_probabilities(r, 0) + last_probabilities(r, 1) + last_probabilities(r, 2) + last_probabilities(r, 3)
+        CSV_prep = [r.initial] + last_welfare(runs) + last_probabilities(r, 0) + last_probabilities(r, 1) + last_probabilities(r, 2) + last_probabilities(r, 3)
         print(','.join(map(str, CSV_prep)))
