@@ -1,6 +1,6 @@
 import os
 import sys
-sys.path.append(os.path.dirname(os.path.realpath(__file__))) # hack (https://stackoverflow.com/a/49375740)
+sys.path.insert(1, os.path.join(sys.path[0], '..')) # hack: https://stackoverflow.com/questions/714063/importing-modules-from-parent-folder#comment23054549_11158224
 
 from learning import *
 
