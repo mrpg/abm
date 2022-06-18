@@ -7,4 +7,4 @@ class Production:
         self.output_money = output_money
 
     def __repr__(self):
-        return f'<Production:{self.name}|{self.input_water},{self.input_money},{self.output_water},{self.output_money}>'
+        return f"<Production:{self.name}|{self.input_water},{self.input_money},{self.output_water},{self.output_money}>"

@@ -1,12 +1,18 @@
 # abm
 
+<p align="center">
+    <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
+</p>
+
+A simple reinforcement learning model for the game of Farolfi & Erdlenbruch, 2020, ["A classroom experimental game to improve the understanding of asymmetric common-pool resource dilemmas in irrigation water management"](https://www.sciencedirect.com/science/article/abs/pii/S1477388020300268). Developed at the [2022 BESLab Summer School for Computational and Experimental Economics](https://www.upf.edu/web/beslab/summer-school-for-computational-and-experimental-economics) at [Universitat Pompeu Fabra](https://www.upf.edu/). Team members: [@GabrielBayle](https://github.com/GabrielBayle), [@gitcombat](https://github.com/gitcombat), [@mrpg](https://max.pm).
+
 To run the central simulation,
 
 ```sh
-python3 -i abm.py 0.05 20 10000 250
+python3 -i abm.py 0.05 20 1000 5000
 ```
 
-The 10000 denotes the number of replications (the "outer loop") and 250 the number of rounds (the "inner loop"). You may wish to reduce the number of replications. A random seed can be specified (our own seed is in `seed.txt`). To see usage,
+The 1000 denotes the number of replications (the "outer loop") and 5000 the number of rounds (the "inner loop"). You may wish to reduce the number of replications. A random seed can be specified (our own seed is in `seed.txt`). To see usage,
 
 ```sh
 python3 abm.py --help
