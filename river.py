@@ -34,7 +34,7 @@ class River:
 
         self.amount = self.initial
 
-    def another_run(self, stochastic_inflow = None):
+    def another_round(self, stochastic_inflow = None):
         self.reset()
 
         if stochastic_inflow is not None:
@@ -68,10 +68,10 @@ class River:
             
         return outcomes
 
-    def many_runs(self, n = 10000, stochastic_inflow = None):
-        all_runs = []
+    def many_rounds(self, n = 10000, stochastic_inflow = None):
+        all_rounds = []
         
         for _ in range(n):
-            all_runs.append(self.another_run(stochastic_inflow))
+            all_rounds.append(self.another_round(stochastic_inflow))
 
-        return all_runs
+        return all_rounds

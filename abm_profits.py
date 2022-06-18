@@ -17,9 +17,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
     rng = np.random.default_rng(args.seed)
 
-    print(f'initial,welfare_pi,welfare_liter,strat0,strat1,strat2,strat3')
+    print(f'replication,round,pi1,pi2,pi3,pi4')
 
-    for replication in range(10000):
+    for replication in range(1000):
         r = River(1)
 
         for _ in range(4):
@@ -30,7 +30,5 @@ if __name__ == '__main__':
 
         rounds = r.many_rounds(5000)
 
-        next_round = r.another_round()
-
-        CSV_prep = [r.initial] + next_round['welfare'] + [str(g[0])+'+'+g[1].name for g in next_round['choices']]
-        print(','.join(map(str, CSV_prep)), flush = True)
+        for j,(pi1,pi2,pi3,pi4) in enumerate(zip(profits(r, which = 0), profits(r, which = 1), profits(r, which = 2), profits(r, which = 3))):
+            print(f'{replication},{j},{pi1},{pi2},{pi3},{pi4}')

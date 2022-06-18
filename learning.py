@@ -33,7 +33,7 @@ class ReinforcementSimple(Learning):
             self.rng = rng
 
         if values is None:
-            self.values = np.zeros(n) # TODO
+            self.values = np.zeros(n)
         else:
             self.values = values
 

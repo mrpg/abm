@@ -13,8 +13,8 @@ if __name__ == '__main__':
     parser.add_argument('alpha', type = float, help = 'alpha')
     parser.add_argument('lambda_', type = float, help = 'lambda')
     parser.add_argument('seed', nargs = '?', default = None, type = int, help = 'seed')
-    parser.add_argument('replications', nargs = '?', default = 10000, type = int, help = 'replications')
-    parser.add_argument('rounds', nargs = '?', default = 250, type = int, help = 'rounds per replication')
+    parser.add_argument('replications', type = int, help = 'replications')
+    parser.add_argument('rounds', type = int, help = 'rounds per replication')
 
     args = parser.parse_args()
     rng = np.random.default_rng(args.seed)
@@ -30,7 +30,7 @@ if __name__ == '__main__':
                                            lambda_ = args.lambda_,
                                            rng = rng))
 
-        runs = r.many_runs(args.rounds)
+        rounds = r.many_rounds(args.rounds)
 
-        CSV_prep = [r.initial] + last_welfare(runs) + last_probabilities(r, 0) + last_probabilities(r, 1) + last_probabilities(r, 2) + last_probabilities(r, 3)
+        CSV_prep = [r.initial] + last_welfare(rounds) + last_probabilities(r, 0) + last_probabilities(r, 1) + last_probabilities(r, 2) + last_probabilities(r, 3)
         print(','.join(map(str, CSV_prep)))
