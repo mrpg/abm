@@ -1,6 +1,7 @@
 library(dplyr)
 library(ggplot2)
 library(ggthemes)
+library(tidyr)
 
 data <- data.frame(alpha = character(30), lambda = character(30), w1 = numeric(30), w2 = numeric(30))
 i <- 1
@@ -46,6 +47,31 @@ probs_by_player <- function (player, df) {
         theme_pander()
 }
 
+profits <- read.csv("profits.csv") %>%
+    mutate(welfare = pi1 + pi2 + pi3 + pi4)
+
+q025 <- function (x) {
+    quantile(x, 0.025)
+}
+
+q975 <- function (x) {
+    quantile(x, 0.975)
+}
+
+p3 <- ggplot(profits, aes(x = round, y = welfare)) +
+    geom_line(stat = "summary", fun = "mean") + 
+    geom_line(stat = "summary", fun = "q025", color = "#1e5bff") + 
+    geom_line(stat = "summary", fun = "q975", color = "#1e5bff") + 
+	coord_cartesian(xlim = c(0, 1000)) +
+    theme_pander()
+
+profits2 <- gather(profits, farmer, profit, pi1:pi4)
+
+p4 <- ggplot(profits2, aes(x = round, y = profit, group = farmer, color = farmer)) +
+    geom_line(stat = "summary", fun = "mean") + 
+	coord_cartesian(xlim = c(0, 1000)) +
+    theme_pander()
+
 # save:
 
-ggsave(filename = "/tmp/out.pdf", plot = probs_by_player(0, results_ok), device = cairo_pdf, width = 8, height = 6)
+ggsave(filename = "plot_learning_profits.pdf", plot = p4, device = cairo_pdf, width = 8, height = 6)
