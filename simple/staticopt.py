@@ -13,7 +13,7 @@ def profit(a):
     else:
         return 2*(12-x)/((12)*(12-5))
 
-learner = ReinforcementSimple(0.1, 20, len(actions))
+learner = ReinforcementSimple(0.5, 50, len(actions))
 
 for _ in range(500):
     action = learner.choose()
