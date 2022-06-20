@@ -3,13 +3,11 @@ import os
 import sys
 import random
 
-sys.path.append(
-    os.path.dirname(os.path.realpath(__file__))
-)  # hack (https://stackoverflow.com/a/49375740)
+import numpy as np
 
-from farmer import *
-from river import *
-from helpers import *
+from farmer import Farmer
+from river import River
+from learning.reinforcement import Reinforcement
 
 parser = argparse.ArgumentParser()
 parser.add_argument("alpha", type=float, help="alpha")
@@ -23,6 +21,6 @@ r = River(1)
 
 for _ in range(4):
     r.add_farmer(
-        learn_model="ReinforcementSimple",
+        learn_model=Reinforcement,
         learn_args=dict(alpha=args.alpha, lambda_=args.lambda_, rng=rng),
     )

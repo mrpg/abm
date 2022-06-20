@@ -1,21 +1,19 @@
-from learning import *
-from production import *
-
 import itertools
 import math
 
+from production import Production
+
 
 class Farmer:
-    def __init__(self, river, learn_model="Learning", learn_args=None):
+    def __init__(self, river, learn_model, learn_args=None):
         self.river = river
         self.investment = 0
         self.endowment = 0
 
         self.initial = (river, self.investment, self.endowment)
 
-        learn_model_cls = globals()[learn_model]
         self.strategies = self.available_strategies()
-        self.learn = learn_model_cls(n=len(self.strategies), **learn_args)
+        self.learn = learn_model(n=len(self.strategies), **learn_args)
 
     def possible_investments(self):
         return range(4)

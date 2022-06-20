@@ -5,7 +5,8 @@ sys.path.insert(
     1, os.path.join(sys.path[0], "..")
 )  # hack: https://stackoverflow.com/questions/714063/importing-modules-from-parent-folder#comment23054549_11158224
 
-from learning import *
+from production import Production
+from learning.reinforcement import Reinforcement
 
 COOP = 0
 DEFECT = 1
@@ -27,8 +28,8 @@ def profits(a1=COOP, a2=COOP):
 
 
 learners = [
-    ReinforcementSimple(0.1, 1, len(actions)),
-    ReinforcementSimple(0.1, 1, len(actions)),
+    Reinforcement(0.1, 1, len(actions)),
+    Reinforcement(0.1, 1, len(actions)),
 ]
 
 for _ in range(500):

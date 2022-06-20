@@ -3,12 +3,11 @@ import os
 import sys
 import random
 
-sys.path.append(
-    os.path.dirname(os.path.realpath(__file__))
-)  # hack (https://stackoverflow.com/a/49375740)
+import numpy as np
 
-from farmer import *
-from river import *
+from farmer import Farmer
+from river import River
+from learning.reinforcement import Reinforcement
 from helpers import *
 
 if __name__ == "__main__":
@@ -39,7 +38,7 @@ if __name__ == "__main__":
 
         for _ in range(4):
             r.add_farmer(
-                learn_model="ReinforcementSimple",
+                learn_model=Reinforcement,
                 learn_args=dict(alpha=args.alpha, lambda_=args.lambda_, rng=rng),
             )
 

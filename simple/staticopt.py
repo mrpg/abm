@@ -5,7 +5,7 @@ sys.path.insert(
     1, os.path.join(sys.path[0], "..")
 )  # hack: https://stackoverflow.com/questions/714063/importing-modules-from-parent-folder#comment23054549_11158224
 
-from learning import *
+from learning.reinforcement import Reinforcement
 
 actions = [x for x in range(0, 12 + 1)]
 
@@ -18,7 +18,7 @@ def profit(a):
         return 2 * (12 - x) / ((12) * (12 - 5))
 
 
-learner = ReinforcementSimple(0.5, 50, len(actions))
+learner = Reinforcement(0.5, 50, len(actions))
 
 for _ in range(500):
     action = learner.choose()
