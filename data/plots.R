@@ -66,6 +66,7 @@ p3 <- ggplot(profits, aes(x = round, y = welfare)) +
     theme_pander()
 
 profits2 <- gather(profits, farmer, profit, pi1:pi4)
+profits2$farmer <- substr(profits2$farmer, 3, 3)
 
 p4 <- ggplot(profits2, aes(x = round, y = profit, group = farmer, color = farmer)) +
     geom_line(stat = "summary", fun = "mean") + 
