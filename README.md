@@ -2,11 +2,9 @@
 
 <p align="center">
     <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
-
-    <img alt="Profits over time" width="85%" src="https://github.com/mrpg/abm/blob/main/data/plot_learning_profits.svg?sanitize=true&raw=true" />
 </p>
 
-![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
+![Profits over time](https://github.com/mrpg/abm/blob/main/data/plot_learning_profits.svg?sanitize=true&raw=true)
 
 A simple reinforcement learning model for the game of Farolfi & Erdlenbruch, 2020, ["A classroom experimental game to improve the understanding of asymmetric common-pool resource dilemmas in irrigation water management"](https://www.sciencedirect.com/science/article/abs/pii/S1477388020300268). Developed at the [2022 BESLab Summer School for Computational and Experimental Economics](https://www.upf.edu/web/beslab/summer-school-for-computational-and-experimental-economics) at [Universitat Pompeu Fabra](https://www.upf.edu/). Team members: [@GabrielBayle](https://github.com/GabrielBayle), [@gitcombat](https://github.com/gitcombat), [@mrpg](https://max.pm).
 
