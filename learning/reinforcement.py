@@ -28,7 +28,5 @@ class Reinforcement(Learning):
 
     def update(self, action, reward):
         # print(f'{action} -> {reward}, value: {self.values[action]}', end = '')
-        self.values[action] = (1 - self["alpha"]) * self.values[action] + self[
-            "alpha"
-        ] * reward
+        self.values[action] = (1 - self["alpha"]) * self.values[action] + self["alpha"] * reward
         # print(f' -> {self.values[action]}')
